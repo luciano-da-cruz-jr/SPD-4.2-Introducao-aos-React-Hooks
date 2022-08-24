@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import narutoImg from '../../images/naruto.png';
 import { Quotes } from '../../components';
-import { getQuote } from '../../services'
+import { getQuote } from '../../services';
+import jutsoSound from '../../sounds/jutso.mp3';
 
+const audio = new Audio(jutsoSound);
 
 export function App() 
 {
@@ -12,9 +14,15 @@ export function App()
   const onUpdate = async () => 
   {
     const quote = await getQuote();
+    audio.play();
 
     setQuoteState(quote);
   };
+
+  useEffect(() =>
+  {
+    onUpdate();
+  }, []);
 
   return (
     <Content>
